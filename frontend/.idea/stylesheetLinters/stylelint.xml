@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="StylelintConfiguration">
+    <config-file value="" />
+    <option name="nodeInterpreter" value="project" />
+    <option name="stylelintPackage" value="" />
+  </component>
+</project>

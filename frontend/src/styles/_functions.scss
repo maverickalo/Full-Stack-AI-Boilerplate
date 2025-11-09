@@ -1,0 +1,8 @@
+@use 'variables' as *;
+
+// ADD CSS FUNCTIONS HERE
+
+// CONVERT PX TO REM ALLOWS TO RESET BASE VIA VARIABLES
+@function rem($px) {
+  @return ($px / $base-font-size) * 1rem;
+}

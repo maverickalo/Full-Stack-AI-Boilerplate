@@ -1,0 +1,13 @@
+@use '@/styles/functions' as *;
+
+.button {
+  padding: rem(12) rem(24);
+  border: none;
+  border-radius: rem(6);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "full-stack-ai-boilerplate",
+  "version": "1.0.0",
+  "description": "Production-ready fullstack boilerplate with Next.js, Node.js, PostgreSQL, and OpenAI integration",
+  "keywords": [
+    "nextjs",
+    "nodejs",
+    "postgresql",
+    "openai",
+    "boilerplate",
+    "fullstack",
+    "ai",
+    "typescript",
+    "docker",
+    "starter"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/full-stack-ai-boilerplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/full-stack-ai-boilerplate/issues"
+  },
+  "homepage": "https://github.com/yourusername/full-stack-ai-boilerplate#readme",
+  "scripts": {
+    "init": "node scripts/init.js",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "docker:services": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build --no-cache",
+    "docker:logs": "docker-compose logs -f",
+    "frontend": "cd frontend && npm run dev",
+    "start": "concurrently \"npm run docker:services\" \"sleep 5 && npm run frontend\"",
+    "dev": "npm run start",
+    "stop": "npm run docker:down",
+    "clean": "docker-compose down -v && rm -rf frontend/node_modules backend/node_modules frontend/.next",
+    "reset": "npm run clean && rm -rf node_modules && npm run init",
+    "db:seed": "cd backend && npm run db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prompts": "^2.4.2",
+    "chalk": "^4.1.2"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}

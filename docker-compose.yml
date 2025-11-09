@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16                                          # Use PostgreSQL 16 image
+    container_name: fullstack-ai-db                             # Custom container name for easy identification
+    environment:
+      POSTGRES_USER: postgres                                   # Set PostgreSQL username
+      POSTGRES_PASSWORD: postgres                               # Set PostgreSQL password
+      POSTGRES_DB: fullstack_ai_app                             # Create database named 'fullstack_ai_app'
+    ports:
+      - "5433:5432"                                             # Map host port 5433 to container port 5432
+    volumes:
+      - db_data:/var/lib/postgresql/data                        # Persist database data to named volume
+      # Prisma handles schema and seeding - no need for SQL file mounting
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]          # Check if PostgreSQL is ready to accept connections
+      interval: 5s                                             # Run health check every 5 seconds
+      timeout: 5s                                              # Health check times out after 5 seconds
+      retries: 5                                               # Retry health check 5 times before marking unhealthy
+
+  backend:
+    build: ./backend                                            # Build image from Dockerfile in ./backend directory
+    container_name: fullstack-ai-backend                       # Custom container name for easy identification
+    ports:
+      - "4000:4000"                                            # Map host port 4000 to container port 4000
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/fullstack_ai_app # Database connection string using service name 'db'
+      NODE_ENV: development                                     # Set Node.js environment to development
+    env_file:
+      - ./backend/.env                                          # Load additional environment variables from .env file
+    depends_on:
+      db:
+        condition: service_healthy                              # Wait for database to be healthy before starting
+    volumes:
+      - ./backend:/usr/src/app                                  # Mount backend source code for development
+      - /usr/src/app/node_modules                               # Prevent node_modules from being overwritten by host
+    restart: unless-stopped                                     # Auto-restart container unless manually stopped
+
+volumes:
+  db_data:                                                      # Named volume to persist PostgreSQL data

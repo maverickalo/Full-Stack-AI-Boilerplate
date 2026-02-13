@@ -7,7 +7,6 @@ interface ButtonProps extends BaseComponentProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-// ADDING COMMENT TO TESTSSSSsssSSsSSS
 export default function Button({
   children,
   className,
